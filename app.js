@@ -27,9 +27,8 @@ btnReset.addEventListener('click', (e) => {
     overlayDiv.style.display = 'none';
 });
 
-//console.log(getRandomPhraseAsArray(arrOfPhrases));
-
 //adds the letters of a string of characters to the display 
+
 const addPhraseToDisplay = arr => {
     for ( let i = 0; i < arr.length; i++) {
         const li = document.createElement('li');
@@ -40,12 +39,12 @@ const addPhraseToDisplay = arr => {
         } else {
             li.className = 'letter';
         }
-        ul.appendChild(li);
-    }
+    ul.appendChild(li);
+  }
 }
 
 const characs = getRandomPhraseAsArray(arrOfPhrases);
-console.log(addPhraseToDisplay(characs));
+addPhraseToDisplay(characs);
 
 //check if a letter is in the phrase 
 const checkLetter = button => { 
@@ -55,7 +54,7 @@ const checkLetter = button => {
     for (let i = 0; i < listItems.length; i++) {
         if (button.textContent.toLowerCase() === listItems[i].textContent.toLowerCase()) {
             listItems[i].className = 'show';
-            match = button.textContent;
+            match += button.textContent;
         }   
     }
     return match;
@@ -71,14 +70,16 @@ const checkWin = () => {
         liLetter.push(liItems[i]);
         } else if (liItems[i].className === 'show') {
         liShow.push(liItems[i])
-        }    
-    }
-
+        }   
+    }   
     if (liLetter.length === liShow.length) {
+        const h2 = overlayDiv.firstElementChild;
         overlayDiv.className = 'win';
+        h2.textContent = 'Well done. You won!'
         overlayDiv.style.display = 'flex';
-    }
+    } 
 }
+
 
 let missed = 0;
 const heartElements = document.querySelectorAll('.tries');
@@ -86,7 +87,7 @@ const heartElements = document.querySelectorAll('.tries');
 //listen for the onscreen keyboard to be clicked
 keyboard.addEventListener('click', (e) => {
     const button = e.target;
-    if (button.tagName === 'BUTTON' && e.target.className.indexOf('chosen') === -1) {
+    if (button.tagName === 'BUTTON' && button.className.indexOf('chosen') === -1) {
         button.className += ' chosen';
         const letterFound = checkLetter(button);
     
@@ -99,8 +100,6 @@ keyboard.addEventListener('click', (e) => {
   }
   checkWin();
 }); 
-
-
 
 
 
