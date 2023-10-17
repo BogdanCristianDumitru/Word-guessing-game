@@ -6,6 +6,8 @@ const overlayDiv = document.getElementById('overlay');
 const ul = document.querySelector('#phrase ul');
 const listItems = ul.children;
 
+let missed = 0;
+const heartElements = document.querySelectorAll('.tries');
 
 const arrOfPhrases = [
     'This fall the weather is going to be beautiful',
@@ -53,7 +55,7 @@ const checkLetter = button => {
 
     for (let i = 0; i < listItems.length; i++) {
         if (button.textContent.toLowerCase() === listItems[i].textContent.toLowerCase()) {
-            listItems[i].className = 'show';
+            listItems[i].classList.add('show');
             match += button.textContent;
         }   
     }
@@ -75,14 +77,15 @@ const checkWin = () => {
     if (liLetter.length === liShow.length) {
         const h2 = overlayDiv.firstElementChild;
         overlayDiv.className = 'win';
-        h2.textContent = 'Well done. You won!'
+        h2.textContent = 'Well done! You won.'
         overlayDiv.style.display = 'flex';
-    } 
+    } else if (missed > 4) {
+        overlayDiv.className = 'lose';
+        const h2 = overlayDiv.firstElementChild;
+        h2.textContent = "I'm sorry. You lost. Try again."
+        overlayDiv.style.display = 'flex';
+    }
 }
-
-
-let missed = 0;
-const heartElements = document.querySelectorAll('.tries');
 
 //listen for the onscreen keyboard to be clicked
 keyboard.addEventListener('click', (e) => {
