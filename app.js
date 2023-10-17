@@ -4,10 +4,12 @@ const phrase = document.getElementById('phrase');
 const btnReset = document.querySelector('.btn__reset');
 const overlayDiv = document.getElementById('overlay');
 const ul = document.querySelector('#phrase ul');
-const listItems = ul.children;
-
-let missed = 0;
 const heartElements = document.querySelectorAll('.tries');
+const h2 = overlayDiv.firstElementChild;
+
+const listItems = ul.children;
+let missed = 0;
+
 
 const arrOfPhrases = [
     'This fall the weather is going to be beautiful',
@@ -75,13 +77,11 @@ const checkWin = () => {
         }   
     }   
     if (liLetter.length === liShow.length) {
-        const h2 = overlayDiv.firstElementChild;
         overlayDiv.className = 'win';
         h2.textContent = 'Well done! You won.'
         overlayDiv.style.display = 'flex';
     } else if (missed > 4) {
         overlayDiv.className = 'lose';
-        const h2 = overlayDiv.firstElementChild;
         h2.textContent = "I'm sorry. You lost. Try again."
         overlayDiv.style.display = 'flex';
     }
