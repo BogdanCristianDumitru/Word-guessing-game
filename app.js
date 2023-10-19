@@ -4,9 +4,9 @@ const phrase = document.getElementById('phrase');
 const btnReset = document.querySelector('.btn__reset');
 const overlayDiv = document.getElementById('overlay');
 const ul = document.querySelector('#phrase ul');
+let liItems = ul.children;
 const heartElements = document.querySelectorAll('.tries');
 const h2 = overlayDiv.firstElementChild;
-
 const listItems = ul.children;
 let missed = 0;
 
@@ -42,7 +42,7 @@ const addPhraseToDisplay = arr => {
             li.className = 'space';
         } else {
             li.className = 'letter';
-        }
+        }   
     ul.appendChild(li);
   }
 }
@@ -66,7 +66,6 @@ const checkLetter = button => {
 
 //check if the game has been won or lost 
 const checkWin = () => {
-    let liItems = ul.children;
     let liLetter = [];
     let liShow = [];
     for (let i = 0; i < liItems.length; i++) {
@@ -80,10 +79,12 @@ const checkWin = () => {
         overlayDiv.className = 'win';
         h2.textContent = 'Well done! You won.'
         overlayDiv.style.display = 'flex';
+        btnReset.textContent = 'Restart game'
     } else if (missed > 4) {
         overlayDiv.className = 'lose';
-        h2.textContent = "I'm sorry. You lost. Try again."
+        h2.textContent = "You lost! Try again."
         overlayDiv.style.display = 'flex';
+        btnReset.textContent = 'Restart game'
     }
 }
 
@@ -104,9 +105,30 @@ keyboard.addEventListener('click', (e) => {
   checkWin();
 }); 
 
+//function to restart game
+const restartGame = () => {
+    missed = 0;
+    ul.innerHTML = '';
 
+    heartElements.forEach(heart => {
+        heart.innerHTML = '<img src="images/liveHeart.png" height="35px" width="30px">';
+    });
 
+    const characs = getRandomPhraseAsArray(arrOfPhrases);
+    addPhraseToDisplay(characs);
 
+    const chosenButtons = document.querySelectorAll('.chosen');
+    chosenButtons.forEach(button => {
+        button.classList.remove('chosen');
+      });
+}
+
+// Attach the restartGame function to .btn__reset
+btnReset.addEventListener('click', (e) => {
+    if (overlayDiv.className === 'win' || overlayDiv.className === 'lose') {
+      restartGame();
+    } 
+  });
 
 
 
